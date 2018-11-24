@@ -11,7 +11,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Class(models.Model):
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
-    user = models.ForeignKey('User', models.DO_NOTHING, unique=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE, unique=True)
     name = models.CharField(max_length=100)
 
     class Meta:
@@ -21,7 +21,7 @@ class Class(models.Model):
 
 class Payment(models.Model):
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
-    class_field = models.ForeignKey(Class, models.DO_NOTHING, db_column='class_id')  # Field renamed because it was a Python reserved word.
+    class_field = models.ForeignKey(Class, on_delete=models.CASCADE, db_column='class_id')  # Field renamed because it was a Python reserved word.
     creation_date = models.DateTimeField()
     start_date = models.DateField()
     end_date = models.DateField()
@@ -36,8 +36,8 @@ class Payment(models.Model):
 
 class PaymentDetail(models.Model):
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
-    payment = models.ForeignKey(Payment, models.DO_NOTHING, blank=True, null=True)
-    student = models.ForeignKey('Student', models.DO_NOTHING, unique=True)
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, blank=True, null=True)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, unique=True)
     amount_paid = models.DecimalField(max_digits=6, decimal_places=2)
 
     class Meta:
@@ -47,8 +47,8 @@ class PaymentDetail(models.Model):
 
 class Student(models.Model):
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
-    class_field = models.ForeignKey(Class, models.DO_NOTHING, db_column='class_id', blank=True, null=True)  # Field renamed because it was a Python reserved word.
-    user = models.ForeignKey('User', models.DO_NOTHING)
+    class_field = models.ForeignKey(Class, on_delete=models.CASCADE, db_column='class_id', blank=True, null=True)  # Field renamed because it was a Python reserved word.
+    user = models.ForeignKey('User', on_delete=models.CASCADE,)
     name = models.CharField(max_length=255)
     deleted_at = models.DateTimeField(blank=True, null=True)
 
@@ -58,13 +58,14 @@ class Student(models.Model):
 
 
 class User(AbstractUser):
-    REQUIRED_FIELDS = ('name', 'login', 'password')
-    id_field = models.IntegerField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
+    
+    id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
     name = models.CharField(max_length=100)
-    login = models.CharField(max_length=64, unique=True)
+    username = models.CharField(max_length=64, unique=True)
     email = models.CharField(max_length=120)
     password = models.CharField(max_length=200)
     role = models.IntegerField()
+    USERNAME_FIELD = 'username'
 
     class Meta:
         managed = True

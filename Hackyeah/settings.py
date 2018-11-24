@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -138,3 +138,15 @@ REST_FRAMEWORK = {
 }
 import skarbnik
 AUTH_USER_MODEL = 'skarbnik.User'
+ALLOWED_HOSTS = ['77.55.236.173', 'localhost', '0.0.0.0']
+import datetime
+
+JWT_AUTH = {
+
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=3),
+
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+
+
+}
