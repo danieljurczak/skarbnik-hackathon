@@ -25,9 +25,14 @@ router.register(r'payment', myapp_views.PaymentViewset)
 router.register(r'paymentdetail', myapp_views.PaymentDetailViewset)
 router.register(r'student', myapp_views.StudentViewset)
 router.register(r'users', myapp_views.UserViewset)
+<<<<<<< HEAD
 # router.register(r'users/change_password', myapp_views.ChangePasswordView, 'api')
+=======
+router.register(r'teachers', myapp_views.TeachersViewset)
+>>>>>>> changepassword
 
 urlpatterns = [
+    path('api/users/change_password', myapp_views.UpdatePassword.as_view()),
     path('admin/', admin.site.urls),
     path('api/users/login', obtain_jwt_token),
     path('api-token-refresh', refresh_jwt_token),
