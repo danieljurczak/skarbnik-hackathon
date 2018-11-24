@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ('id_field', 'name', 'username', 'email', 'role', 'password')
+        fields = ('url', 'id_field', 'name', 'username', 'email', 'role', 'password')
     
     def create(self, validated_data):
         user = models.User.objects.create(
@@ -38,3 +38,15 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = ('id_field', 'class_field', 'user', 'name')
+
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+class TeachersSerializer(serializers.Serializer):
+    class Meta:
+        model = models.User
+        fields = ('url', 'id_field', 'name', 'username', 'email', 'role', 'password')
