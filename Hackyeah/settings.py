@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'skarbnik'
+    'skarbnik',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,7 @@ WSGI_APPLICATION = 'Hackyeah.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'Skarbnik',
+        'NAME': 'Skarbnik2',
         'USER': 'daniel',
         'PASSWORD': '123',
         'HOST': '77.55.236.173',
@@ -135,6 +136,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+
 }
 import skarbnik
 AUTH_USER_MODEL = 'skarbnik.User'

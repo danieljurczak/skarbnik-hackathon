@@ -1,11 +1,10 @@
-<<<<<<< HEAD
-from rest_framework import viewsets, generics
-=======
+
 from rest_framework import viewsets, generics, views, status
->>>>>>> changepassword
 from . import models
 from . import serializers
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+
 class ClassViewset(viewsets.ModelViewSet):
     queryset = models.Class.objects.all()
     serializer_class = serializers.ClassSerializer
@@ -25,6 +24,7 @@ class StudentViewset(viewsets.ModelViewSet):
 class UserViewset(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 class ChangePasswordView(generics.UpdateAPIView):
@@ -54,6 +54,11 @@ class ChangePasswordView(generics.UpdateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 =======
+=======
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('role',)
+
+>>>>>>> changepassword
     def get_object(self):
         pk = self.kwargs.get('pk')
 
@@ -87,7 +92,19 @@ class UpdatePassword(views.APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+<<<<<<< HEAD
 class TeachersViewset(viewsets.ReadOnlyModelViewSet):
     queryset = models.User.objects.filter(role=1)
     serializer_class = serializers.TeachersSerializer
+>>>>>>> changepassword
+=======
+# class TeachersList(generics.ListAPIView):
+#     serializer_class = TeachersList
+
+#     def get_queryset(self):
+#         """
+#         This view should return a list of all the purchases
+#         for the currently authenticated user.
+#         """
+#         return models.User.objects.filter(role=1)
 >>>>>>> changepassword
