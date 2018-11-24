@@ -66,7 +66,7 @@ class User(AbstractUser):
     password = models.CharField(max_length=200)
     role = models.IntegerField()
     USERNAME_FIELD = 'username'
-
+    
     class Meta:
         managed = True
         db_table = 'user'

@@ -25,6 +25,7 @@ router.register(r'payment', myapp_views.PaymentViewset)
 router.register(r'paymentdetail', myapp_views.PaymentDetailViewset)
 router.register(r'student', myapp_views.StudentViewset)
 router.register(r'users', myapp_views.UserViewset)
+# router.register(r'users/change_password', myapp_views.ChangePasswordView, 'api')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

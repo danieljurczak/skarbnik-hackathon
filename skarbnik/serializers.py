@@ -38,3 +38,10 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = ('id_field', 'class_field', 'user', 'name')
+
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
