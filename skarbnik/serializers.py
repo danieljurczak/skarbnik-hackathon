@@ -8,13 +8,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('url', 'id_field', 'name', 'username', 'email', 'role', 'password')
     
     def create(self, validated_data):
-        user = models.User.objects.create(
+        user = models.User.objects.create_user(
             email=validated_data['email'],
             username=validated_data['username'],
             password = make_password(validated_data['password']),
             role = validated_data['role'],
             name = validated_data['name'],
-            id_field = validated_data['id_field'],
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -46,7 +45,7 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
-class TeachersSerializer(serializers.Serializer):
-    class Meta:
-        model = models.User
-        fields = ('url', 'id_field', 'name', 'username', 'email', 'role', 'password')
+# class TeacherSerializer(serializers.Serializer):
+#     class Meta:
+#         model = models.User
+#         fields = ('url', 'id_field', 'name', 'username', 'email', 'role', 'password')
