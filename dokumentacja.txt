@@ -1,0 +1,11 @@
+LOGOWANIE 
+POST api/users/login
+wymagany JSON
+{
+    "username" : "admin",
+    "password" : "password"
+}
+zwraca 
+{
+    "token" : <token>
+}
