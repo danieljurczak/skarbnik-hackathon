@@ -66,3 +66,11 @@ class UpdatePassword(views.APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class TeachersViewset(viewsets.ViewSet):
+    """
+    A simple ViewSet for listing or retrieving users.
+    """
+    def list(self, request):
+        queryset = models.User.objects.raw('SELECT * FROM user WHERE user.role = 1 AND user.id_ NOT IN (SELECT user_id FROM class)')
+        serializer = serializers.TeacherSerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from . import models
 from django.contrib.auth.hashers import make_password
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
@@ -18,6 +17,14 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+class TeacherSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.User
+        fields = ('url', 'id_field', 'name', 'username', 'email', 'role', 'password')
+
+
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Class

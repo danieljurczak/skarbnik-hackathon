@@ -24,7 +24,7 @@ router.register(r'payment', myapp_views.PaymentViewset)
 router.register(r'paymentdetail', myapp_views.PaymentDetailViewset)
 router.register(r'student', myapp_views.StudentViewset)
 router.register(r'users', myapp_views.UserViewset)
-
+router.register(r'teachers', myapp_views.TeachersViewset, basename='users')
 
 urlpatterns = [
     path('api/users/change_password', myapp_views.UpdatePassword.as_view()),
