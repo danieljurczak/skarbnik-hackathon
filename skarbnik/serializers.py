@@ -26,9 +26,14 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class ClassSerializer(serializers.ModelSerializer):
+    user_name = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='name'
+     )
     class Meta:
         model = models.Class
-        fields = ('id_field', 'name', 'user')
+        fields = ('id_field', 'name', 'user', 'user_name')
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,3 +60,6 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
+class ProgressSerializer(serializers.Serializer):
+    class Meta:
+        model = models.Student

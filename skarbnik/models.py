@@ -37,7 +37,7 @@ class Payment(models.Model):
 class PaymentDetail(models.Model):
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, blank=True, null=True)
-    student = models.ForeignKey('Student', on_delete=models.CASCADE, unique=True)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
     amount_paid = models.DecimalField(max_digits=6, decimal_places=2)
 
     class Meta:

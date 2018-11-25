@@ -74,3 +74,19 @@ class TeachersViewset(viewsets.ViewSet):
         queryset = models.User.objects.raw('SELECT * FROM user WHERE user.role = 1 AND user.id_ NOT IN (SELECT user_id FROM class)')
         serializer = serializers.TeacherSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
+
+class ProgressViewset(viewsets.ViewSet):
+    """
+    A simple ViewSet for listing or retrieving users.
+    """
+    def list(self, request):
+        pk = "1"
+        obiekty = models.Student.objects.raw('SELECT student.id_, payment.amount * COUNT(student.id|_) AS "target", SUM(payment_detail.amount_paid) AS paid FROM payment INNER JOIN student ON payment.class_id = student.class_id INNER JOIN payment_detail ON payment_detail.payment_id_ = payment.id_ AND payment_detail.student_id_ = student.id_ WHERE payment.id_ =' + pk)
+        result = []
+        for n in obiekty:
+            for x in n:
+                print(x)
+
+
+        # serializer = serializers.ProgressSerializer(queryset, many=True, context={'request': request})
+        # return Response(serializer.data)
