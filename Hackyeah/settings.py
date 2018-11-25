@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'Hackyeah.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'Skarbnik3',#Skarbnik2
+        'NAME': 'Skarbnik2',
         'USER': 'daniel',
         'PASSWORD': '123',
         'HOST': '77.55.236.173',

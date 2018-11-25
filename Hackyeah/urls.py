@@ -25,8 +25,12 @@ router.register(r'paymentdetail', myapp_views.PaymentDetailViewset)
 router.register(r'student', myapp_views.StudentViewset)
 router.register(r'users', myapp_views.UserViewset)
 <<<<<<< HEAD
+<<<<<<< HEAD
 router.register(r'teachers', myapp_views.TeachersViewset, basename='users')
 router.register(r'progress', myapp_views.ProgressViewset, basename='student')
+=======
+
+>>>>>>> parent of e705b6c... Add teachers endpoint
 =======
 
 >>>>>>> parent of e705b6c... Add teachers endpoint
