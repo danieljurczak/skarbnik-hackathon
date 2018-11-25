@@ -28,15 +28,18 @@ class PaymentSerializer(serializers.ModelSerializer):
         model = models.Payment
         fields = ('id_field', 'class_field', 'creation_date', 'start_date', 'end_date', 'amount', 'name', 'description')
 
+
+class StudentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Student
+        fields = ('id_field', 'class_field', 'user', 'name')
+
 class PaymentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PaymentDetail
         fields = ('id_field', 'payment', 'student', 'amount_paid')
 
-class StudentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Student
-        fields = ('id_field', 'class_field', 'user', 'name')
 
 class ChangePasswordSerializer(serializers.Serializer):
     """
