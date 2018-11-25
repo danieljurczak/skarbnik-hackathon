@@ -19,6 +19,8 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 class ClassSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = models.Class
         fields = ('id_field', 'name', 'user')

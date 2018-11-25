@@ -17,12 +17,14 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
     queryset = models.PaymentDetail.objects.all()
     serializer_class = serializers.PaymentDetailSerializer
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('student',)
+    filterset_fields = ('student', )
 
 class StudentViewset(viewsets.ModelViewSet):
     queryset = models.Student.objects.all()
     serializer_class = serializers.StudentSerializer
-    
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('user',)
+
 class UserViewset(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
