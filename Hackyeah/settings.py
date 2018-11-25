@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'txdn26@lnowwq7^ww-i8+hy%uk%oj9ww$iv6ac0=cfzs=m%abz'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
     'rest_framework',
     'skarbnik',
     'django_filters',
@@ -140,7 +141,7 @@ REST_FRAMEWORK = {
 }
 import skarbnik
 AUTH_USER_MODEL = 'skarbnik.User'
-ALLOWED_HOSTS = ['77.55.236.173', 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['*']
 import datetime
 
 JWT_AUTH = {
