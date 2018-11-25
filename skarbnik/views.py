@@ -12,20 +12,15 @@ class ClassViewset(viewsets.ModelViewSet):
 class PaymentViewset(viewsets.ModelViewSet):
     queryset = models.Payment.objects.all()
     serializer_class = serializers.PaymentSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('class_field', )
+
 class PaymentDetailViewset(viewsets.ModelViewSet):
     queryset = models.PaymentDetail.objects.all()
     serializer_class = serializers.PaymentDetailSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('student', )
 
 class StudentViewset(viewsets.ModelViewSet):
     queryset = models.Student.objects.all()
     serializer_class = serializers.StudentSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('user',)
-
+    
 class UserViewset(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
@@ -66,3 +61,11 @@ class UpdatePassword(views.APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class TeachersViewset(viewsets.ViewSet):
+    """
+    A simple ViewSet for listing or retrieving users.
+    """
+    def list(self, request):
+        queryset = models.User.objects.raw('SELECT * FROM user WHERE user.role = 1 AND user.id_ NOT IN (SELECT user_id FROM class)')
+        serializer = serializers.TeacherSerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)

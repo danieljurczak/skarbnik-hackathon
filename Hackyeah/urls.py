@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib import admin
 from django.urls import path , include
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from rest_framework import routers
@@ -24,12 +25,14 @@ router.register(r'payment', myapp_views.PaymentViewset)
 router.register(r'paymentdetail', myapp_views.PaymentDetailViewset)
 router.register(r'student', myapp_views.StudentViewset)
 router.register(r'users', myapp_views.UserViewset)
+router.register(r'teachers', myapp_views.TeachersViewset, basename='users')
 
 
 urlpatterns = [
     path('api/users/change_password', myapp_views.UpdatePassword.as_view()),
+    path('admin/', admin.site.urls),
     path('api/users/login', obtain_jwt_token),
-    path('api/users/refresh', refresh_jwt_token),
+    path('api-token-refresh', refresh_jwt_token),
     path('api/', include(router.urls)),
 
 ]

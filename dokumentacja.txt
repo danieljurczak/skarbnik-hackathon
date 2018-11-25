@@ -1,7 +1,3 @@
-AUTORYZUJEMY SIE PRZ UZYCIU TOKENA 
-HEADER
-token : Basic <token>
-
 LOGOWANIE 
 POST api/users/login
 wymagany JSON
@@ -13,36 +9,3 @@ zwraca
 {
     "token" : <token>
 }
-
-
-ZMIANA HASŁA
-PUT api/users/change_password
-wymagany JSON oraz autoryzacja
-{
-"old_password" : "admin12",
-"new_password" : "admina"
-}
-
-ODSWIEZENIE TOKENU
-POST api/users/refresh
-wymagany JSON oraz autoryzacja
-{
-"token" : "<nasz_token>
-}
-zwraca
-{
-"token" : "<ten-sam-token-z-dluzszym-czasem-waznosci>
-}
-
-Jezeli jestesmy zautoryzowani to mozemy odpytac
-/api/user/current/
-dostaniemy wtedy informacje o sobie.
-
-KAZDA Z ENDPOINTOW PONIZEJ MOZE DOSTAĆ ZAPYTANIA GET, POST, PUT, DELETE
-
-/api zwraca listę endpointow z obiektami CRUD
-
-Mozemy filtrowac wyniki np.
-/api/users/?role=1 -> zwraca nauczycieli
-
-/api/student/?user=1 -> zwraca studentow, gdzie rodzicem jest user o id=1
