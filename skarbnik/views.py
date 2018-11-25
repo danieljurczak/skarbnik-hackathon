@@ -16,6 +16,8 @@ class PaymentViewset(viewsets.ModelViewSet):
 class PaymentDetailViewset(viewsets.ModelViewSet):
     queryset = models.PaymentDetail.objects.all()
     serializer_class = serializers.PaymentDetailSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('student',)
 
 class StudentViewset(viewsets.ModelViewSet):
     queryset = models.Student.objects.all()
