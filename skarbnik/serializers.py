@@ -47,6 +47,15 @@ class PaymentDetailSerializer(serializers.ModelSerializer):
         model = models.PaymentDetail
         fields = ('id_field', 'payment', 'student', 'amount_paid')
 
+class PaymentListSerializer(serializers.ModelSerializer):
+    student = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='name'
+     )
+    class Meta:
+        model = models.PaymentDetail
+        fields = ('id_field', 'payment', 'student', 'amount_paid')
 
 class ChangePasswordSerializer(serializers.Serializer):
     """
