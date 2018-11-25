@@ -34,6 +34,10 @@ zwraca
 "token" : "<ten-sam-token-z-dluzszym-czasem-waznosci>
 }
 
+Jezeli jestesmy zautoryzowani to mozemy odpytac
+/api/user/current/
+dostaniemy wtedy informacje o sobie.
+
 KAZDA Z ENDPOINTOW PONIZEJ MOZE DOSTAĆ ZAPYTANIA GET, POST, PUT, DELETE
 
 /api zwraca listę endpointow z obiektami CRUD
