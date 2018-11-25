@@ -22,9 +22,9 @@ class Class(models.Model):
 class Payment(models.Model):
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
     class_field = models.ForeignKey(Class, on_delete=models.CASCADE, db_column='class_id')  # Field renamed because it was a Python reserved word.
-    creation_date = models.DateTimeField()
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    creation_date = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -50,7 +50,6 @@ class Student(models.Model):
     class_field = models.ForeignKey(Class, on_delete=models.CASCADE, db_column='class_id', blank=True, null=True)  # Field renamed because it was a Python reserved word.
     user = models.ForeignKey('User', on_delete=models.CASCADE,)
     name = models.CharField(max_length=255)
-    deleted_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = True
