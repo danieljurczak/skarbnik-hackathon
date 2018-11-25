@@ -1,1 +1,1 @@
-web: gunicorn Hackyeah/wsgi.py:application
+web: gunicorn Hackyeah.wsgi:application
