@@ -41,14 +41,7 @@ INSTALLED_APPS = [
     'skarbnik',
     'django_filters',
     'corsheaders',
-    'payu',
 ]
-PAYU_MERCHANT_KEY = "345717",
-
-PAYU_MERCHANT_SALT = "79bce5813c019a2a74a6149cad7010be",
-
-# And add the PAYU_MODE to 'TEST' for testing and 'LIVE' for production.
-PAYU_MODE = "TEST"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
