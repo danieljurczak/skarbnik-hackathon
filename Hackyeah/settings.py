@@ -41,7 +41,14 @@ INSTALLED_APPS = [
     'skarbnik',
     'django_filters',
     'corsheaders',
+    'payu',
 ]
+PAYU_MERCHANT_KEY = "345717",
+
+PAYU_MERCHANT_SALT = "79bce5813c019a2a74a6149cad7010be",
+
+# And add the PAYU_MODE to 'TEST' for testing and 'LIVE' for production.
+PAYU_MODE = "TEST"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -91,8 +98,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'Skarbnik3',
         'USER': 'daniel',
-        'PASSWORD': '123',
-        'HOST': '77.55.236.173',
+        'PASSWORD': '#',
+        'HOST': '#',
         'PORT': '3306',
     }
 }
@@ -139,7 +146,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
