@@ -5,6 +5,7 @@ from . import serializers
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
+
 class ClassViewset(viewsets.ModelViewSet):
     queryset = models.Class.objects.all()
     serializer_class = serializers.ClassSerializer
@@ -23,6 +24,7 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
         queryset = models.PaymentDetail.objects.all()
         serializer = serializers.PaymentListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
+    
 
 class StudentViewset(viewsets.ModelViewSet):
     queryset = models.Student.objects.all()
