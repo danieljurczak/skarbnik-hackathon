@@ -19,6 +19,7 @@ from rest_framework import routers
 from skarbnik import views as myapp_views
 from django.conf.urls import url
 from rest_framework_swagger.views import get_swagger_view
+from django.contrib import admin
 
 schema_view = get_swagger_view(title='Skarbnik API')
 
@@ -29,10 +30,13 @@ router.register(r'paymentdetail', myapp_views.PaymentDetailViewset)
 router.register(r'student', myapp_views.StudentViewset)
 router.register(r'users', myapp_views.UserViewset)
 router.register(r'teachers', myapp_views.TeachersViewset, basename='users')
+router.register(r'activity', myapp_views.UserLoginActivityViewset, basename='activity')
 
 urlpatterns = [
     path('api/users/change_password', myapp_views.UpdatePassword.as_view()),
-    path('api/users/login', obtain_jwt_token),
+    path('api/users/login', view=myapp_views.ObtainJWTView.as_view(), name='login'),
+    path('admin/', admin.site.urls),
+
     path('api/users/refresh', refresh_jwt_token),
     path('api/', include(router.urls)),
     path('', schema_view)

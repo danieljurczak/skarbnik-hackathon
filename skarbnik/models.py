@@ -63,9 +63,27 @@ class User(AbstractUser):
     username = models.CharField(max_length=64, unique=True)
     email = models.CharField(max_length=120)
     password = models.CharField(max_length=200)
-    role = models.IntegerField()
+    role = models.IntegerField(null=True)
     USERNAME_FIELD = 'username'
     
     class Meta:
         managed = True
         db_table = 'user'
+
+class UserLoginActivity(models.Model):
+    # Login Status
+    SUCCESS = 'S'
+    FAILED = 'F'
+
+    LOGIN_STATUS = ((SUCCESS, 'Success'),
+                           (FAILED, 'Failed'))
+
+    login_IP = models.GenericIPAddressField(null=True, blank=True)
+    login_datetime = models.DateTimeField(auto_now=True)
+    login_username = models.CharField(max_length=40, null=True, blank=True)
+    status = models.CharField(max_length=1, default=SUCCESS, choices=LOGIN_STATUS, null=True, blank=True)
+    user_agent_info = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = 'user_login_activity'
+        verbose_name_plural = 'user_login_activities'

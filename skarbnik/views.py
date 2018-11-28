@@ -4,6 +4,8 @@ from . import models
 from . import serializers
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework_jwt.views import ObtainJSONWebToken
+from django.shortcuts import get_object_or_404
 
 
 class ClassViewset(viewsets.ModelViewSet):
@@ -95,4 +97,31 @@ class TeachersViewset(viewsets.ViewSet):
     def list(self, request):
         queryset = models.User.objects.raw('SELECT * FROM user WHERE user.role = 1 AND user.id_ NOT IN (SELECT user_id FROM class)')
         serializer = serializers.TeacherSerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+
+# Create your views here.
+class ObtainJWTView(ObtainJSONWebToken):
+    serializer_class = serializers.JWTSerializer
+
+class UserLoginActivityViewset(viewsets.ViewSet):
+    """
+    An endpoint for listing Login Activities without class.
+    """
+    def get_queryset(self):
+        queryset = models.UserLoginActivity.objects.all()
+        name = self.request.query_params.get('login_username')
+
+        if name:
+            queryset = queryset.filter(login_username=name)
+
+        return queryset
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = serializers.UserLoginActivitySerializer(queryset, many=True, context={'request': request})
+        
+        return Response(serializer.data)
+    def retrieve(self, request, pk=None):
+        queryset = models.UserLoginActivity.objects.all()
+        user_activity = get_object_or_404(queryset, pk=pk)
+        serializer = serializers.UserLoginActivitySerializer(user_activity)
         return Response(serializer.data)
