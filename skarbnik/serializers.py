@@ -32,7 +32,7 @@ class UserLoginActivitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserLoginActivity
-        fields = ('id', 'login_datetime', 'login_username')
+        fields = ('id', 'login_datetime', 'login_username', 'status', 'login_IP')
 
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
