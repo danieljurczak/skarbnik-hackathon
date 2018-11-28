@@ -90,6 +90,7 @@ WSGI_APPLICATION = 'Hackyeah.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
@@ -144,7 +145,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -161,10 +162,10 @@ import datetime
 
 JWT_AUTH = {
 
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=3),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
 
     'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(hours=30),
     'JWT_AUTH_HEADER_PREFIX': 'Basic',
 
 
