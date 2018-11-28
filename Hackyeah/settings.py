@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'skarbnik',
     'django_filters',
     'corsheaders',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -94,8 +95,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'Skarbnik3',
         'USER': 'daniel',
-        'PASSWORD': 'oJbP~7d=(eb3REyP',
-        'HOST': '77.55.236.173',
+        'PASSWORD': ',
+        'HOST': '',
         'PORT': '3306',
     }
 }
@@ -143,7 +144,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',

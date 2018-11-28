@@ -7,15 +7,24 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class ClassViewset(viewsets.ModelViewSet):
+    """
+    Viewset for class details, lists etc.
+    """
     queryset = models.Class.objects.all()
     serializer_class = serializers.ClassSerializer
 
 class PaymentViewset(viewsets.ModelViewSet):
+    """
+    Viewset for Payments(list, detail, create, retrieve, delete)
+    """
     queryset = models.Payment.objects.all()
     serializer_class = serializers.PaymentSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('class_field', )
 class PaymentDetailViewset(viewsets.ModelViewSet):
+    """
+    Viewset for Payments Details(list, detail, create, retrieve, delete). Record for user's payments.
+    """
     queryset = models.PaymentDetail.objects.all()
     serializer_class = serializers.PaymentDetailSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -27,12 +36,19 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
     
 
 class StudentViewset(viewsets.ModelViewSet):
+    """
+    Viewset for Student(list, detail, create, retrieve, delete)
+    """
     queryset = models.Student.objects.all()
     serializer_class = serializers.StudentSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('user',)
 
 class UserViewset(viewsets.ModelViewSet):
+    """
+    Viewset for User(list, detail, create, retrieve, delete).
+    If you are authorised, you can request /api/user/current and get details about yourself.
+    """
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -74,7 +90,7 @@ class UpdatePassword(views.APIView):
 
 class TeachersViewset(viewsets.ViewSet):
     """
-    A simple ViewSet for listing or retrieving users.
+    An endpoint for listing teachers without class.
     """
     def list(self, request):
         queryset = models.User.objects.raw('SELECT * FROM user WHERE user.role = 1 AND user.id_ NOT IN (SELECT user_id FROM class)')

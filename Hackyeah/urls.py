@@ -17,6 +17,10 @@ from django.urls import path , include
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from rest_framework import routers
 from skarbnik import views as myapp_views
+from django.conf.urls import url
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Skarbnik API')
 
 router = routers.DefaultRouter()
 router.register(r'class', myapp_views.ClassViewset)
@@ -31,5 +35,7 @@ urlpatterns = [
     path('api/users/login', obtain_jwt_token),
     path('api/users/refresh', refresh_jwt_token),
     path('api/', include(router.urls)),
+    path('', schema_view)
 
 ]
+
