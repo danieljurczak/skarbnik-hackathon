@@ -130,7 +130,7 @@ def create_detail_payment():
 
     payment = Payment.objects.get(id_field=random.randint(11, 36))
     student = random.choice(Student.objects.filter(class_field=payment.class_field))
-    amount_paid = payment.amount - random.randint(0, int(payment.amount))
+    amount_paid = payment.amount 
 
     c = PaymentDetail.objects.create(payment=payment, student=student,amount_paid=amount_paid)
     c.save()
