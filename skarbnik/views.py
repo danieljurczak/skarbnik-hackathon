@@ -127,9 +127,3 @@ class UserLoginActivityViewset(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-from django.contrib.auth import logout as main_logout
-
-def logout(*args, **kwargs):
-    resp = main_logout(*args, **kwargs)
-    resp['Refresh'] = '3;URL=/account/login/' # redirects after 3 seconds to /account/login
-    return resp

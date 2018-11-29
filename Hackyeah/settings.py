@@ -86,6 +86,7 @@ TEMPLATES = [
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGOUT_URL = '/accounts/logout/'
+LOGIN_URL = '/accounts/login/'
 
 WSGI_APPLICATION = 'Hackyeah.wsgi.application'
 
@@ -173,4 +174,12 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Basic',
 
 
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
 }
