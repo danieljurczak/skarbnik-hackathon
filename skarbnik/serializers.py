@@ -21,7 +21,11 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-
+class UserMinInfoSerializer(serializers.ModelSerializer):
+   class Meta:
+       model = models.User
+       fields = ('id_field', 'name')
+       
 class TeacherSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -29,15 +33,22 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = ('url', 'id_field', 'name', 'username', 'email', 'role', 'password')
 
 class UserLoginActivitySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.UserLoginActivity
         fields = ('id', 'login_datetime', 'login_username', 'status', 'login_IP')
 
 class ClassSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = models.Class
         fields = ('id_field', 'name', 'user')
+
+class ClassListSerializer(serializers.ModelSerializer):
+    user = UserMinInfoSerializer()
+    class Meta:
+        model = models.Class
+        fields = ('id_field', 'name', 'user')
+
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:

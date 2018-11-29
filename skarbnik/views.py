@@ -14,6 +14,10 @@ class ClassViewset(viewsets.ModelViewSet):
     """
     queryset = models.Class.objects.all()
     serializer_class = serializers.ClassSerializer
+    def list(self, request):
+        queryset = models.Class.objects.all()
+        serializer = serializers.ClassListSerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)
 
 class PaymentViewset(viewsets.ModelViewSet):
     """
