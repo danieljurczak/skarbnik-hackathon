@@ -5,7 +5,7 @@ from . import serializers
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_jwt.views import ObtainJSONWebToken
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 
 class ClassViewset(viewsets.ModelViewSet):
@@ -125,3 +125,11 @@ class UserLoginActivityViewset(viewsets.ViewSet):
         user_activity = get_object_or_404(queryset, pk=pk)
         serializer = serializers.UserLoginActivitySerializer(user_activity)
         return Response(serializer.data)
+
+
+from django.contrib.auth import logout as main_logout
+
+def logout(*args, **kwargs):
+    resp = main_logout(*args, **kwargs)
+    resp['Refresh'] = '3;URL=/account/login/' # redirects after 3 seconds to /account/login
+    return resp

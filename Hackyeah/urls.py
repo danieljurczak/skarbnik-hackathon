@@ -20,6 +20,7 @@ from skarbnik import views as myapp_views
 from django.conf.urls import url
 from rest_framework_swagger.views import get_swagger_view
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 schema_view = get_swagger_view(title='Skarbnik API')
 
@@ -36,7 +37,8 @@ urlpatterns = [
     path('api/users/change_password', myapp_views.UpdatePassword.as_view()),
     path('api/users/login', view=myapp_views.ObtainJWTView.as_view(), name='login'),
     path('admin/', admin.site.urls),
-
+    path('accounts/login/',  auth_views.login, {'template_name': 'registration/login.html'}, name='login'),
+    path('accounts/logout/', auth_views.logout, name='logout'),
     path('api/users/refresh', refresh_jwt_token),
     path('api/', include(router.urls)),
     path('', schema_view)
