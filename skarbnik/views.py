@@ -49,6 +49,10 @@ class StudentViewset(viewsets.ModelViewSet):
     serializer_class = serializers.StudentSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('user',)
+    def list(self, request):
+        queryset = models.Student.objects.all()
+        serializer = serializers.StudentListSerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)
 
 class UserViewset(viewsets.ModelViewSet):
     """

@@ -48,6 +48,11 @@ class ClassListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Class
         fields = ('id_field', 'name', 'user')
+class ClassMinInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Class
+        fields = ('id_field', 'name')
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -58,6 +63,12 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = models.Student
+        fields = ('id_field', 'class_field', 'user', 'name')
+class StudentListSerializer(serializers.ModelSerializer):
+    user = UserMinInfoSerializer()
+    class_field = ClassMinInfoSerializer()
     class Meta:
         model = models.Student
         fields = ('id_field', 'class_field', 'user', 'name')
