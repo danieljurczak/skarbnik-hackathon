@@ -78,6 +78,26 @@ class PaymentDetailSerializer(serializers.ModelSerializer):
         model = models.PaymentDetail
         fields = ('id_field', 'payment', 'student', 'amount_paid')
 
+class CounterSerializer(serializers.ModelSerializer):
+    student_count = serializers.SerializerMethodField(method_name="students_count_method")
+    teachers_count = serializers.SerializerMethodField(method_name="teachers_count_method")
+    parent_count = serializers.SerializerMethodField(method_name="parents_count_method")
+    class_count = serializers.SerializerMethodField(method_name="classes_count_method")
+
+    class Meta:
+        model = models.Class
+        fields = ('student_count', 'teachers_count', 'parent_count', 'class_count',)
+
+    def students_count_method(self, obj):
+        return models.Student.objects.count()
+    def teachers_count_method(self, obj):
+        return models.User.objects.filter(role=1).count()
+    def parents_count_method(self, obj):
+        return models.User.objects.filter(role=0).count()
+    def classes_count_method(self, obj):
+        return models.Class.objects.count()
+
+
 class PaymentListSerializer(serializers.ModelSerializer):
     student = serializers.SlugRelatedField(
         many=False,

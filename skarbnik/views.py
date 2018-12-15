@@ -54,6 +54,10 @@ class StudentViewset(viewsets.ModelViewSet):
         serializer = serializers.StudentListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
+class CounterViewSet(viewsets.ModelViewSet):
+    queryset = models.Class.objects.all()
+    serializer_class = serializers.CounterSerializer
+
 class UserViewset(viewsets.ModelViewSet):
     """
     Viewset for User(list, detail, create, retrieve, delete).
