@@ -66,6 +66,9 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = ('id_field', 'class_field', 'user', 'name')
+
+
+
 class StudentListSerializer(serializers.ModelSerializer):
     user = UserMinInfoSerializer()
     class_field = ClassMinInfoSerializer()
@@ -99,11 +102,7 @@ class CounterSerializer(serializers.ModelSerializer):
 
 
 class PaymentListSerializer(serializers.ModelSerializer):
-    student = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='name'
-     )
+    student = StudentSerializer()
     class Meta:
         model = models.PaymentDetail
         fields = ('id_field', 'payment', 'student', 'amount_paid')

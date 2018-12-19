@@ -33,24 +33,34 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
     """
     queryset = models.PaymentDetail.objects.all()
     serializer_class = serializers.PaymentDetailSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('student', )
-    def list(self, request):
+    def get_queryset(self):
         queryset = models.PaymentDetail.objects.all()
+        student_id = self.request.query_params.get('student', None)
+        if student_id is not None:
+            queryset = queryset.filter(student__id_field=student_id)
+        return queryset
+
+    def list(self, request):
+        queryset = self.get_queryset()
         serializer = serializers.PaymentListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
     
-
 class StudentViewset(viewsets.ModelViewSet):
     """
     Viewset for Student(list, detail, create, retrieve, delete)
     """
-    queryset = models.Student.objects.all()
+    
     serializer_class = serializers.StudentSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('user',)
-    def list(self, request):
+    queryset = models.Student.objects.all()
+    def get_queryset(self):
         queryset = models.Student.objects.all()
+        user_id = self.request.query_params.get('user', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id_field=user_id)
+        return queryset
+
+    def list(self, request):
+        queryset = self.get_queryset()
         serializer = serializers.StudentListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
