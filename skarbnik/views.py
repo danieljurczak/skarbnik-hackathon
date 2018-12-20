@@ -14,8 +14,15 @@ class ClassViewset(viewsets.ModelViewSet):
     """
     queryset = models.Class.objects.all()
     serializer_class = serializers.ClassSerializer
-    def list(self, request):
+    def get_queryset(self):
         queryset = models.Class.objects.all()
+        user_id = self.request.query_params.get('user', None)
+        if user_id is not None:
+            queryset = queryset.filter(user__id_field=user_id)
+        return queryset
+
+    def list(self, request):
+        queryset = self.get_queryset()
         serializer = serializers.ClassListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -27,6 +34,8 @@ class PaymentViewset(viewsets.ModelViewSet):
     serializer_class = serializers.PaymentSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('class_field', )
+
+
 class PaymentDetailViewset(viewsets.ModelViewSet):
     """
     Viewset for Payments Details(list, detail, create, retrieve, delete). Record for user's payments.
