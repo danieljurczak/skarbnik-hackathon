@@ -45,8 +45,12 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = models.PaymentDetail.objects.all()
         student_id = self.request.query_params.get('student', None)
+        payment_id = self.request.query_params.get('payment', None)
         if student_id is not None:
             queryset = queryset.filter(student__id_field=student_id)
+        if payment_id is not None:
+            queryset =  queryset.filter(payment__id_field=payment_id)
+        
         return queryset
 
     def list(self, request):
