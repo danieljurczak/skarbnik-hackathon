@@ -40,7 +40,7 @@ class Payment(models.Model):
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     name = models.CharField(max_length=255)
     description = models.TextField()
-
+    image = models.ImageField(upload_to='images')
     class Meta:
         managed = True
         db_table = 'payment'
@@ -90,48 +90,3 @@ class UserLoginActivity(models.Model):
 
 
 
-import random
-import names
-from datetime import timedelta, datetime
-def random_date(start, end):
-    """
-    This function will return a random datetime between two datetime 
-    objects.
-    """
-    delta = end - start
-    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
-    random_second = random.randrange(int_delta)
-    return start + timedelta(seconds=random_second)
-
-def create_student():
-    class_field = Class.objects.get(id_field=random.randint(4, 11))
-    user = User.objects.get(id_field=random.randint(76, 122))
-    name = names.get_full_name()
-    c = Student.objects.create(name=name, class_field=class_field, user=user)
-    c.save()
-    return c
-
-def create_payment():
-    d1 = datetime.strptime('12/1/2018', '%m/%d/%Y')
-    d2 = datetime.strptime('1/1/2019', '%m/%d/%Y')
-    d3 = datetime.strptime('1/2/2019', '%m/%d/%Y')
-    d4= datetime.strptime('2/1/2019', '%m/%d/%Y')
-
-    class_field = Class.objects.get(id_field=random.randint(4, 11))
-    start_date = random_date(d1, d2)
-    end_date = random_date(d3, d4)
-    amount = random.randint(10, 1000)
-    name = "Sample tittle"
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et gravida ante. Etiam laoreet est vitae quam volutpat euismod. Nullam congue libero consequat, tempor arcu non, pulvinar elit."
-    c = Payment.objects.create(name=name, class_field=class_field, start_date=start_date, end_date=end_date, amount=amount,description=description)
-    c.save()
-    return c
-def create_detail_payment():
-
-    payment = Payment.objects.get(id_field=random.randint(11, 36))
-    student = random.choice(Student.objects.filter(class_field=payment.class_field))
-    amount_paid = payment.amount 
-
-    c = PaymentDetail.objects.create(payment=payment, student=student,amount_paid=amount_paid)
-    c.save()
-    return c

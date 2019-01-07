@@ -58,7 +58,7 @@ class ClassMinInfoSerializer(serializers.ModelSerializer):
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Payment
-        fields = ('id_field', 'class_field', 'creation_date', 'start_date', 'end_date', 'amount', 'name', 'description')
+        fields = ('id_field', 'class_field', 'creation_date', 'start_date', 'end_date', 'amount', 'name', 'description', 'image')
 
 
 class StudentSerializer(serializers.ModelSerializer):

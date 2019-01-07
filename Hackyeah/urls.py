@@ -21,6 +21,8 @@ from django.conf.urls import url
 from rest_framework_swagger.views import get_swagger_view
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.conf import settings
 
 schema_view = get_swagger_view(title='Skarbnik API')
 
@@ -43,6 +45,5 @@ urlpatterns = [
     path('api/users/refresh', refresh_jwt_token),
     path('api/', include(router.urls)),
     path('', schema_view)
-
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

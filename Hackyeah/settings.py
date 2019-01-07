@@ -146,6 +146,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'skarbnik-hackathon')
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -160,6 +163,9 @@ REST_FRAMEWORK = {
 
 
 }
+
+
+
 import skarbnik
 AUTH_USER_MODEL = 'skarbnik.User'
 ALLOWED_HOSTS = ['*']
