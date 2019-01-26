@@ -4,6 +4,7 @@ from . import models
 from . import serializers
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from rest_framework_jwt.views import ObtainJSONWebToken
 from django.shortcuts import get_object_or_404, redirect
 
@@ -42,6 +43,7 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
     """
     queryset = models.PaymentDetail.objects.all()
     serializer_class = serializers.PaymentDetailSerializer
+    filter_backends = (filters.OrderingFilter,)
     def get_queryset(self):
         queryset = models.PaymentDetail.objects.all()
         student_id = self.request.query_params.get('student', None)
@@ -55,6 +57,7 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
 
     def list(self, request):
         queryset = self.get_queryset()
+        queryset = self.filter_queryset(queryset)
         serializer = serializers.PaymentListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
     

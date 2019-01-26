@@ -7,6 +7,8 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
+from datetime import datetime
 class User(AbstractUser):
     
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.
@@ -51,6 +53,7 @@ class PaymentDetail(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, blank=True, null=True)
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     amount_paid = models.DecimalField(max_digits=6, decimal_places=2)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = True

@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from . import models
-from django.contrib.auth.hashers import make_password
 from rest_framework_jwt.serializers import JSONWebTokenSerializer, jwt_payload_handler, jwt_encode_handler
+
 from django.contrib.auth import authenticate, user_logged_in
+from django.contrib.auth.hashers import make_password
+from django.db.models import Sum
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -56,9 +58,12 @@ class ClassMinInfoSerializer(serializers.ModelSerializer):
 
 
 class PaymentSerializer(serializers.ModelSerializer):
+    amount_paided = serializers.SerializerMethodField()
     class Meta:
         model = models.Payment
-        fields = ('id_field', 'class_field', 'creation_date', 'start_date', 'end_date', 'amount', 'name', 'description', 'image')
+        fields = ('id_field', 'class_field', 'creation_date', 'start_date', 'end_date', 'amount', 'name', 'description', 'image', 'amount_paided')
+    def get_amount_paided(self, obj):
+        return models.PaymentDetail.objects.filter(student__class_field=obj.class_field).aggregate(Sum('amount_paid'))["amount_paid__sum"]
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -79,7 +84,7 @@ class StudentListSerializer(serializers.ModelSerializer):
 class PaymentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PaymentDetail
-        fields = ('id_field', 'payment', 'student', 'amount_paid')
+        fields = ('id_field', 'payment', 'student', 'amount_paid', 'created')
 
 class CounterSerializer(serializers.ModelSerializer):
     student_count = serializers.SerializerMethodField(method_name="students_count_method")
@@ -105,7 +110,7 @@ class PaymentListSerializer(serializers.ModelSerializer):
     student = StudentSerializer()
     class Meta:
         model = models.PaymentDetail
-        fields = ('id_field', 'payment', 'student', 'amount_paid')
+        fields = ('id_field', 'payment', 'student', 'amount_paid', 'created')
 
 class ChangePasswordSerializer(serializers.Serializer):
     """
