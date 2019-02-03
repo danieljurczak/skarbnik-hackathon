@@ -42,6 +42,7 @@ class Payment(models.Model):
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     name = models.CharField(max_length=255)
     description = models.TextField()
+    currency = models.CharField(max_length=10, default='PLN')
     image = models.ImageField(upload_to='images')
     class Meta:
         managed = True

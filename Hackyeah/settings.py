@@ -103,6 +103,9 @@ DATABASES = {
         'PASSWORD': 'oJbP~7d=(eb3REyP',
         'HOST': '77.55.236.173',
         'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 
