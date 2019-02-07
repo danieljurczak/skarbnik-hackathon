@@ -1,5 +1,5 @@
 
-from rest_framework import viewsets, generics, views, status
+from rest_framework import viewsets, generics, views, status, mixins
 from . import models
 from . import serializers
 from rest_framework.response import Response
@@ -7,8 +7,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework_jwt.views import ObtainJSONWebToken
 from django.shortcuts import get_object_or_404, redirect
-
-
+from .pagination import DefaultResultsSetPagination
 class ClassViewset(viewsets.ModelViewSet):
     """
     Viewset for class details, lists etc.
@@ -68,6 +67,9 @@ class StudentViewset(viewsets.ModelViewSet):
     
     serializer_class = serializers.StudentSerializer
     queryset = models.Student.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('class_field', )
+
     def get_queryset(self):
         queryset = models.Student.objects.all()
         user_id = self.request.query_params.get('user', None)
@@ -77,6 +79,7 @@ class StudentViewset(viewsets.ModelViewSet):
 
     def list(self, request):
         queryset = self.get_queryset()
+        queryset = self.filter_queryset(queryset)
         serializer = serializers.StudentListSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -141,23 +144,27 @@ class TeachersViewset(viewsets.ViewSet):
 class ObtainJWTView(ObtainJSONWebToken):
     serializer_class = serializers.JWTSerializer
 
-class UserLoginActivityViewset(viewsets.ViewSet):
+class UserLoginActivityViewset(mixins.ListModelMixin,
+                               mixins.RetrieveModelMixin,
+                               viewsets.GenericViewSet):
     """
     An endpoint for listing Login Activities without class.
     """
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
+    filterset_fields = ('login_username',)
+    serializer_class = serializers.UserLoginActivitySerializer
+    pagination_class = DefaultResultsSetPagination
     def get_queryset(self):
         queryset = models.UserLoginActivity.objects.all()
-        name = self.request.query_params.get('login_username')
-
-        if name:
-            queryset = queryset.filter(login_username=name)
-
         return queryset
+
     def list(self, request):
         queryset = self.get_queryset()
+        queryset = self.filter_queryset(queryset)
+        queryset = self.paginate_queryset(queryset)
         serializer = serializers.UserLoginActivitySerializer(queryset, many=True, context={'request': request})
-        
         return Response(serializer.data)
+
     def retrieve(self, request, pk=None):
         queryset = models.UserLoginActivity.objects.all()
         user_activity = get_object_or_404(queryset, pk=pk)
