@@ -8,6 +8,8 @@ services:
       MYSQL_DATABASE: Skarbnik3
       MYSQL_USER: docker1
       MYSQL_PASSWORD: docker1
+    ports:
+      - "3306:3306"
   web:
     build: .
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
