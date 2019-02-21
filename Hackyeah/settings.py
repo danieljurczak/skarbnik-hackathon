@@ -99,9 +99,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'Skarbnik3',
-        'USER': 'daniel',
-        'PASSWORD': 'oJbP~7d=(eb3REyP',
-        'HOST': '77.55.236.173',
+        'USER': 'docker1',
+        'PASSWORD': 'docker1',
+        'HOST': 'db',
         'PORT': '3306',
         'OPTIONS': {
             'sql_mode': 'traditional',

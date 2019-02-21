@@ -1,11 +1,20 @@
 version: '3'
 
 services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: docker1
+      MYSQL_DATABASE: Skarbnik3
+      MYSQL_USER: docker1
+      MYSQL_PASSWORD: docker1
   web:
     build: .
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     container_name: skarbnik-hackathon
     volumes:
       - .:/skarbnik-hackathon
+    depends_on:
+      - db
     ports:
       - "8000:8000"
