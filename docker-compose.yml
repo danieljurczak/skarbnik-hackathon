@@ -6,17 +6,18 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: docker1
       MYSQL_DATABASE: Skarbnik3
-      MYSQL_USER: docker1
-      MYSQL_PASSWORD: docker1
+    volumes:
+      - ./db-mount-entrypoint/account-setup.sql:/docker-entrypoint-initdb.d/account-setup.sql
+      - ./db-mount-entrypoint/data-dump.sql:/docker-entrypoint-initdb.d/data-dump.sql
     ports:
       - "3306:3306"
   web:
     build: .
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     container_name: skarbnik-hackathon
     volumes:
       - .:/skarbnik-hackathon
     depends_on:
       - db
+    command: ./wait-for-it.sh -t 0 db:3306 -- bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
