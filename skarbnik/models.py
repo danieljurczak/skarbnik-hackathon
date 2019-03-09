@@ -43,11 +43,13 @@ class Payment(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     currency = models.CharField(max_length=10, default='PLN')
-    image = models.ImageField(upload_to='images')
     class Meta:
         managed = True
         db_table = 'payment'
 
+class PaymentImage(models.Model):
+    payment = models.ForeignKey(Payment, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField()
 
 class PaymentDetail(models.Model):
     id_field = models.AutoField(db_column='id_', primary_key=True)  # Field renamed because it ended with '_'.

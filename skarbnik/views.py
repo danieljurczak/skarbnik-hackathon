@@ -36,6 +36,10 @@ class PaymentViewset(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('class_field', )
 
+class PaymentImageViewSet(viewsets.ModelViewSet):
+    queryset = models.PaymentImage.objects.all()
+    serializer_class = serializers.PaymentImageSerializer
+    filter_backends = (DjangoFilterBackend,)
 
 class PaymentDetailViewset(viewsets.ModelViewSet):
     """

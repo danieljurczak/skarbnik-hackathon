@@ -35,6 +35,7 @@ router.register(r'users', myapp_views.UserViewset)
 router.register(r'teachers', myapp_views.TeachersViewset, basename='users')
 router.register(r'activity', myapp_views.UserLoginActivityViewset, basename='activity')
 router.register(r'counter', myapp_views.CounterViewSet, base_name='counter')
+router.register(r'paymentimages', myapp_views.PaymentImageViewSet)
 
 urlpatterns = [
     path('api/users/change_password', myapp_views.UpdatePassword.as_view()),

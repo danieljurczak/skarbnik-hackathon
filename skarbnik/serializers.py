@@ -56,13 +56,19 @@ class ClassMinInfoSerializer(serializers.ModelSerializer):
         model = models.Class
         fields = ('id_field', 'name')
 
+class PaymentImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.PaymentImage
+        fields = ('payment', 'image')
 
 class PaymentSerializer(serializers.ModelSerializer):
-    amount_paided = serializers.SerializerMethodField()
+    amount_paid = serializers.SerializerMethodField()
+    images = PaymentImageSerializer(many=True, read_only=True)
     class Meta:
         model = models.Payment
-        fields = ('id_field', 'class_field', 'creation_date', 'start_date', 'end_date', 'amount', 'name', 'description', 'image', 'amount_paided', 'currency',)
-    def get_amount_paided(self, obj):
+        fields = ('id_field', 'class_field', 'creation_date', 'start_date', 'end_date', 'amount', 'name', 'description', 'images', 'amount_paid', 'currency',)
+    def get_amount_paid(self, obj):
         return models.PaymentDetail.objects.filter(student__class_field=obj.class_field).aggregate(Sum('amount_paid'))["amount_paid__sum"]
 
 
