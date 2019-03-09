@@ -57,10 +57,10 @@ class ClassMinInfoSerializer(serializers.ModelSerializer):
         fields = ('id_field', 'name')
 
 class PaymentImageSerializer(serializers.ModelSerializer):
-
+    id_field = serializers.IntegerField(source='pk')
     class Meta:
         model = models.PaymentImage
-        fields = ('payment', 'image')
+        fields = ('id_field', 'payment', 'image')
 
 class PaymentSerializer(serializers.ModelSerializer):
     amount_paid = serializers.SerializerMethodField()
