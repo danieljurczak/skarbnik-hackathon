@@ -29,6 +29,7 @@ class ClassViewset(viewsets.ModelViewSet):
 class PaymentViewset(viewsets.ModelViewSet):
     """
     Viewset for Payments(list, detail, create, retrieve, delete)
+    Currency field must contain 3 digit code in compliance with ISO4217 standard    
     """
     queryset = models.Payment.objects.all()
     serializer_class = serializers.PaymentSerializer
