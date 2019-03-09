@@ -21,3 +21,5 @@ services:
     command: bash -c "./wait-for-it.sh -t 0 db:3306 -- python manage.py makemigrations skarbnik && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
+    extra_hosts:
+      - "db:192.168.8.100"
