@@ -1,3 +1,5 @@
+USE Skarbnik3;
+
 -- MySQL dump 10.14  Distrib 5.5.60-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: Skarbnik3
